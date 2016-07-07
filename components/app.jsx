@@ -50,7 +50,7 @@ var ShoppingCart = React.createClass({
   render: function() {
     return (
       <div className="shoppingCart">
-        <h3>Shopping Cart</h3>
+        <h2>Shopping Cart</h2>
         <TotalRow />
         <ItemTable items={this.props.items} />
       </div>
