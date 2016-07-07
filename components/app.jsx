@@ -2,6 +2,11 @@ import React from 'react'
 import ReactDOM from "react-dom"
 import { render } from 'react-dom'
 
+// Item onClick triggers addToCart
+// Results are sent to ShoppingCart
+// ShoppingCart.state.items pushed, .subtotal calculated
+// Don't worry about grouping similar items yet
+
 // ITEMS FOR SALE
 
 var Item = React.createClass({
@@ -62,8 +67,11 @@ var ItemRow = React.createClass({
   }
 });
 
-var ItemTable = React.createClass({
-  addItem: function(e, item) {
+var ShoppingCart = React.createClass({
+  addItem: function(item) {
+    console.log("ShoppingCart - addItem");
+    this.state.items.push(item);
+    this.state.subtotal += item.price.float();
     // TODO - submit to server, refresh list
     // grab Items with q > 1, add to items arr, increase subtotal (+= item.quantity * item.price)
   },
@@ -78,25 +86,17 @@ var ItemTable = React.createClass({
       rows.push(<ItemRow item={item} key={item.id} />);
     });
     return (
-      <table className="table">
-        <thead>
-          <tr className="success">
-            <th>Items: {this.state.items.length}</th>
-            <th>Subtotal: ${this.state.subtotal}</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
-    );
-  }
-});
-
-var ShoppingCart = React.createClass({
-  render: function() {
-    return (
       <div className="shoppingCart">
         <h2>Shopping Cart</h2>
-        <ItemTable />
+        <table className="table">
+          <thead>
+            <tr className="success">
+              <th>Items: {this.state.items.length}</th>
+              <th>Subtotal: ${this.state.subtotal}</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
       </div>
     );
   }
