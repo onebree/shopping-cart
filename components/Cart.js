@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import CartItem from './CartItem'
+import { getSubtotal, getCartProducts } from '../reducers'
+import Product from "./Product"
 
 export default class Cart extends Component {
   render() {
@@ -10,7 +11,7 @@ export default class Cart extends Component {
     const nodes = products.map(product =>
       <tr>
         <td>
-          <CartItem product={product} key={product.id} />
+          <Product name={product.name} price={product.price} key={product.id} />
         </td>
       </tr>
       )
@@ -22,7 +23,7 @@ export default class Cart extends Component {
           <thead>
             <tr className="success">
               <th>Items: {products.length}</th>
-              <th>Subtotal: ${hasProducts ? subtotal : "0.00"}</th>
+              <th>Subtotal: ${subtotal}</th>
             </tr>
           </thead>
           <tbody>{nodes}</tbody>
@@ -33,12 +34,6 @@ export default class Cart extends Component {
 }
 
 Cart.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired
-    })
-  ).isRequired,
+  products: PropTypes.array,
   subtotal: PropTypes.number
 }

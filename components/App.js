@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import { render} from 'react-dom'
+import { Provider } from 'react-redux'
+import store from '../store'
 import ProductsList from './ProductsList'
 import Cart from './Cart'
 
@@ -26,7 +28,9 @@ export default class App extends Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById("react")
-);
+)

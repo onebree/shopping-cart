@@ -12,7 +12,7 @@ export default class ProductItem extends Component {
           <div className="caption">
             <Product name={product.name} price={product.price} />
             <p>
-              <button className="btn btn-primary" onClick={this.props.addToCart}>
+              <button className="btn btn-primary" onClick={this.props.onAddToCart} >
                 Add to cart
               </button>
             </p>
@@ -25,8 +25,8 @@ export default class ProductItem extends Component {
 
 ProductItem.propTypes = {
   product: PropTypes.shape({
-    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired
-  }).isRequired
+  }).isRequired,
+  onAddToCart: PropTypes.func.isRequired
 }

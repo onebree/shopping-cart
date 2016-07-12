@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from "react"
 
 export default class Product extends Component {
   render() {
-    const { id, name, price } = this.props
+    const { name, price } = this.props
     return (
       <div>
         <big>{name}</big>
@@ -13,7 +13,6 @@ export default class Product extends Component {
 }
 
 Product.propTypes = {
-  id: PropTypes.number,
   name: PropTypes.string,
   price: PropTypes.number
 }

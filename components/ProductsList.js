@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import ProductItem from '../components/ProductItem'
 
 export default class ProductsList extends Component {
   render() {
@@ -7,20 +6,12 @@ export default class ProductsList extends Component {
     return (
       <div className="col-md-8">
         <h2>Items For Sale</h2>
-        <div className="row">
-          { products.map(product =>
-            <ProductItem id={product.id} product={product} />
-          )}
-        </div>
+        <div className="row">{this.props.children}</div>
       </div>
     );
   }
 }
 
 ProductsList.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired
-  })).isRequired
+  children: PropTypes.node
 }
