@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Redux from "redux";
 
 var ITEMS = [
   { id: 1, name: "Nexus 6P", price: "499.99" },
@@ -9,6 +10,26 @@ var ITEMS = [
   { id: 5, name: "Women's Bag Gloves", price: "39.55" },
   { id: 6, name: "Casio Digital Watch", price: "14.99" }
 ]
+
+const items = (state = [], action) => {
+  switch (action.type) {
+    case "ADD_ITEM":
+      console.log("CLICK ADD ITEM " + action.name);
+      return [
+        ...state,
+        {
+          id: action.id,
+          name: action.name,
+          price: action.price,
+          quantity: action.quantity + 1
+        }
+      ];
+    default:
+      return state;
+  }
+};
+
+
 
 const Item = ({ id, name, price, quantity, onClick }) => (
   <div className="col-md-4">
