@@ -74,11 +74,37 @@ const ItemsList = ({ items }) => (
     </div>
   </div>
 );
+
+const CartItem = ({ id, name, price, quantity }) => (
+  <tr>
+    <td>{name} / ${price}</td>
+    <td>${price * quantity}</td>
+  </tr>
+)
+
+const Cart = ({ items }) => (
+  <div className="col-md-4">
+    <h2>Shopping Cart</h2>
+    <table className="table">
+      <thead>
+        <tr className="success">
+          <th>Items: {items.reduce((sum, item) => sum + item.quantity, 0)}</th>
+          <th>Subtotal: ${items.map(i => i.price * i.quantity).reduce((sum, p) => sum + p, 0 )}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {items.map(item => <CartItem key={item.id} {...item} />)}
+      </tbody>
+    </table>
+  </div>
+);
+
 const ShoppingCartApp = () => (
   <div>
     <h1>World Class Shopping</h1>
     <div className="row">
       <ItemsList items={ITEMS} />
+      <Cart items={store.getState().items.filter(i => i.quantity > 0)} />
     </div>
   </div>
 );
@@ -87,7 +113,6 @@ const cartApp = combineReducers({ items });
 const store = createStore(cartApp);
 
 const render = () => {
-  console.log("rendering");
   ReactDOM.render(
     <ShoppingCartApp />,
     document.getElementById("root")
