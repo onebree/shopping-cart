@@ -77,7 +77,7 @@ const ItemsList = ({ items }) => (
 
 const CartItem = ({ id, name, price, quantity }) => (
   <tr>
-    <td>{name} / ${price}</td>
+    <td>{name} (${price}) X {quantity}</td>
     <td>${price * quantity}</td>
   </tr>
 )
