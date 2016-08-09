@@ -18,12 +18,21 @@ const item = (state, action) => {
       if (state.id !== action.id) {
         return state;
       }
-
       return {
         id: state.id,
         name: state.name,
         price: state.price,
         quantity: state.quantity + 1
+      };
+    case "REMOVE_ITEM":
+      if (state.id !== action.id) {
+        return state;
+      }
+      return {
+        id: state.id,
+        name: state.name,
+        price: state.price,
+        quantity: state.quantity - 1
       };
     default:
       return state;
@@ -33,6 +42,8 @@ const item = (state, action) => {
 const items = (state = ITEMS, action) => {
   switch (action.type) {
     case "ADD_ITEM":
+      return state.map(i => item(i, action));
+    case "REMOVE_ITEM":
       return state.map(i => item(i, action));
     default:
       return state;
@@ -77,7 +88,21 @@ const ItemsList = ({ items }) => (
 
 const CartItem = ({ id, name, price, quantity }) => (
   <tr>
-    <td>{name} (${price}) X {quantity}</td>
+    <td>
+      <p>{name} (${price}) X {quantity}</p>
+      <p>
+        <a
+          onClick={() => {
+            store.dispatch({
+              type: "REMOVE_ITEM",
+              id: id
+            });
+          }}
+        >
+          Remove
+        </a>
+      </p>
+    </td>
     <td className="text-right">${(price * quantity).toFixed(2)}</td>
   </tr>
 )
