@@ -78,7 +78,7 @@ const ItemsList = ({ items }) => (
 const CartItem = ({ id, name, price, quantity }) => (
   <tr>
     <td>{name} (${price}) X {quantity}</td>
-    <td>${price * quantity}</td>
+    <td className="text-right">${(price * quantity).toFixed(2)}</td>
   </tr>
 )
 
@@ -89,7 +89,7 @@ const Cart = ({ items }) => (
       <thead>
         <tr className="success">
           <th>Items: {items.reduce((sum, item) => sum + item.quantity, 0)}</th>
-          <th>Subtotal: ${items.map(i => i.price * i.quantity).reduce((sum, p) => sum + p, 0 )}</th>
+          <th className="text-right">Subtotal: ${items.map(i => i.price * i.quantity).reduce((sum, p) => sum + p, 0 ).toFixed(2)}</th>
         </tr>
       </thead>
       <tbody>
