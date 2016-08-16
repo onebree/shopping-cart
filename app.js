@@ -72,7 +72,9 @@ const Item = ({ id, name, price, quantity }) => (
         <p>
           <button
             className="btn btn-primary"
+            id={id + "_add_to_cart"}
             onClick={() => {
+              $("#" + id + "_add_to_cart").attr("disabled", true);
               store.dispatch({
                 type: "ADD_ITEM",
                 id: id
@@ -126,6 +128,7 @@ const CartItem = ({ id, name, price, quantity }) => (
       <p>
         <a
           onClick={() => {
+            $("#" + id + "_add_to_cart").attr("disabled", false);
             store.dispatch({
               type: "REMOVE_ITEM",
               id: id
