@@ -1,47 +1,47 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Redux from "redux";
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers } from "redux";
 
 var ITEMS = [
-  { id: 1, name: "Nexus 6P", price: "499.99", quantity: 0 },
-  { id: 2, name: "OnePlus 3", price: "399.99", quantity: 0 },
-  { id: 3, name: "Kindle Paperwhite", price: "119.99", quantity: 0 },
-  { id: 4, name: "Reversible Down Comforter", price: "45.99", quantity: 0 },
-  { id: 5, name: "Women's Bag Gloves", price: "39.55", quantity: 0 },
-  { id: 6, name: "Casio Digital Watch", price: "14.99", quantity: 0 }
+  { id: 1, name: "Nexus 6P", price: "499.99", quantity: 0, cart_id: null },
+  { id: 2, name: "OnePlus 3", price: "399.99", quantity: 0, cart_id: null },
+  { id: 3, name: "Kindle Paperwhite", price: "119.99", quantity: 0, cart_id: null },
+  { id: 4, name: "Reversible Down Comforter", price: "45.99", quantity: 0, cart_id: null },
+  { id: 5, name: "Women's Bag Gloves", price: "39.55", quantity: 0, cart_id: null },
+  { id: 6, name: "Casio Digital Watch", price: "14.99", quantity: 0, cart_id: null }
 ];
 
 const item = (state, action) => {
+  if (state.id != action.id) {
+    return state;
+  }
+
   switch (action.type) {
     case "ADD_ITEM":
-      if (state.id !== action.id) {
-        return state;
-      }
       return {
         id: state.id,
         name: state.name,
         price: state.price,
-        quantity: state.quantity + 1
+        cart_id: action.cart_id,
+        quantity: 1
       };
+
     case "REMOVE_ITEM":
-      if (state.id !== action.id) {
-        return state;
-      }
       return {
         id: state.id,
         name: state.name,
         price: state.price,
+        cart_id: null,
         quantity: 0
-      };
-    case "CHANGE_QUANTITY":
-      if (state.id !== action.id) {
-        return state;
       }
+
+    case "CHANGE_QUANTITY":
       return {
         id: state.id,
         name: state.name,
         price: state.price,
+        cart_id: state.cart_id,
         quantity: action.quantity
       };
     default:
@@ -52,11 +52,21 @@ const item = (state, action) => {
 const items = (state = ITEMS, action) => {
   switch (action.type) {
     case "ADD_ITEM":
+      var cart_items = state.filter(i => i.cart_id != null)
+                            .sort((a,b) => a.cart_id - b.cart_id);
+      if (cart_items.length == 0) {
+        action.cart_id = 1;
+      } else {
+        action.cart_id = cart_items[cart_items.length - 1].cart_id + 1;
+      }
       return state.map(i => item(i, action));
+
     case "REMOVE_ITEM":
       return state.map(i => item(i, action));
+
     case "CHANGE_QUANTITY":
       return state.map(i => item(i, action));
+
     default:
       return state;
   }
@@ -100,7 +110,7 @@ const ItemsList = ({ items }) => (
   </div>
 );
 
-const CartItem = ({ id, name, price, quantity }) => (
+const CartItem = ({ id, name, price, quantity, cart_id }) => (
   <tr>
     <td>
       <p>{name} (${price}) X {quantity}</p>
@@ -140,7 +150,7 @@ const CartItem = ({ id, name, price, quantity }) => (
       </p>
     </td>
   </tr>
-)
+);
 
 const Cart = ({ items }) => (
   <div className="col-md-4">
@@ -149,11 +159,21 @@ const Cart = ({ items }) => (
       <thead>
         <tr className="success">
           <th>Items: {items.reduce((sum, item) => sum + item.quantity, 0)}</th>
-          <th className="text-right">Subtotal: ${items.map(i => i.price * i.quantity).reduce((sum, p) => sum + p, 0 ).toFixed(2)}</th>
+          <th className="text-right">
+            Subtotal: ${
+              items.map(i => i.price * i.quantity)
+                .reduce((sum, p) => sum + p, 0)
+                .toFixed(2)
+            }
+          </th>
         </tr>
       </thead>
       <tbody>
-        {items.map(item => <CartItem key={item.id} {...item} />)}
+        {
+          items.filter(i => i.cart_id != null)
+            .sort((a,b) => a.cart_id - b.cart_id)
+            .map(item => <CartItem key={item.id} {...item} />)
+        }
       </tbody>
     </table>
   </div>
@@ -164,7 +184,7 @@ const ShoppingCartApp = () => (
     <h1>World Class Shopping</h1>
     <div className="row">
       <ItemsList items={ITEMS} />
-      <Cart items={store.getState().items.filter(i => i.quantity > 0)} />
+      <Cart items={store.getState().items} />
     </div>
   </div>
 );
