@@ -32,7 +32,17 @@ const item = (state, action) => {
         id: state.id,
         name: state.name,
         price: state.price,
-        quantity: state.quantity - 1
+        quantity: 0
+      };
+    case "CHANGE_QUANTITY":
+      if (state.id !== action.id) {
+        return state;
+      }
+      return {
+        id: state.id,
+        name: state.name,
+        price: state.price,
+        quantity: action.quantity
       };
     default:
       return state;
@@ -44,6 +54,8 @@ const items = (state = ITEMS, action) => {
     case "ADD_ITEM":
       return state.map(i => item(i, action));
     case "REMOVE_ITEM":
+      return state.map(i => item(i, action));
+    case "CHANGE_QUANTITY":
       return state.map(i => item(i, action));
     default:
       return state;
@@ -91,6 +103,27 @@ const CartItem = ({ id, name, price, quantity }) => (
     <td>
       <p>{name} (${price}) X {quantity}</p>
       <p>
+        <select
+          className="form-control"
+          onChange={(e) => {
+            store.dispatch({
+              type: "CHANGE_QUANTITY",
+              id: id,
+              quantity: +e.target.value
+            });
+          }}
+        >
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </p>
+    </td>
+    <td className="text-right">
+      <p>${(price * quantity).toFixed(2)}</p>
+      <p>
         <a
           onClick={() => {
             store.dispatch({
@@ -103,7 +136,6 @@ const CartItem = ({ id, name, price, quantity }) => (
         </a>
       </p>
     </td>
-    <td className="text-right">${(price * quantity).toFixed(2)}</td>
   </tr>
 )
 
