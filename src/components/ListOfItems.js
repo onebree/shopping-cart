@@ -14,7 +14,7 @@ class ListOfItems extends React.Component {
                       <Item key={key}
                             index={key}
                             details={this.props.items[key]}
-                            addToOrder={this.props.addToOrder} />
+                            addToCart={this.props.addToCart} />
                     </div>)
           }
         </div>
