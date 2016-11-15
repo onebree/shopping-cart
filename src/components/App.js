@@ -23,6 +23,7 @@ class App extends React.Component {
     });
   }
 
+
   addToCart(key) {
     // Take a copy of our state
     const cart = {...this.state.cart};
@@ -45,7 +46,7 @@ class App extends React.Component {
             <ListOfItems items={this.state.items} addToCart={this.addToCart} />
           </div>
           <div className="col-md-4">
-            <Cart />
+            <Cart items={this.state.items} cart={this.state.cart} />
           </div>
         </div>
       </div>
