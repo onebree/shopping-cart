@@ -1,11 +1,13 @@
 import React from "react";
 import Cart from "./Cart";
 import ListOfItems from "./ListOfItems";
+import sampleItems from "../sample-items";
 
 class App extends React.Component {
   constructor() {
     super();
 
+    this.loadSamples = this.loadSamples.bind(this);
     this.addToCart = this.addToCart.bind(this);
 
     // getInitialState
@@ -13,6 +15,12 @@ class App extends React.Component {
       items: {},
       cart: {}
     };
+  }
+
+  loadSamples() {
+    this.setState ({
+      items: sampleItems
+    });
   }
 
   addToCart(key) {
@@ -33,7 +41,8 @@ class App extends React.Component {
         <hr />
         <div className="row">
           <div className="col-md-8">
-            <ListOfItems addToCart={this.addToCart} />
+            <button className="btn btn-default" onClick={this.loadSamples}>Load sample items</button>
+            <ListOfItems items={this.state.items} addToCart={this.addToCart} />
           </div>
           <div className="col-md-4">
             <Cart />
