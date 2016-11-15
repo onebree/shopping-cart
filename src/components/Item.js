@@ -1,4 +1,5 @@
 import React from "react";
+import { formatPrice } from "../helpers";
 
 class Item extends React.Component {
   render() {
@@ -10,7 +11,7 @@ class Item extends React.Component {
           <img className="item-image img-responsive" src="http://placehold.it/400x300" alt={details.name} />
           <div className="caption">
             <big className="item-name">{details.name}</big>
-            <p className="item-price">${details.price}</p>
+            <p className="item-price">{formatPrice(details.price)}</p>
             <button className="btn btn-default" 
                     onClick={() => this.props.addToCart(index)}>
               Add To Cart

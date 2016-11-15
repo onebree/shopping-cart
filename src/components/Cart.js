@@ -1,4 +1,5 @@
 import React from "react";
+import { formatPrice } from "../helpers";
 
 class Cart extends React.Component {
   constructor() {
@@ -10,14 +11,15 @@ class Cart extends React.Component {
   renderCart(key) {
     const item = this.props.items[key];
     const quantity = this.props.cart[key];
+    const price = item.price * quantity;
 
     return (
       <tr key={key}>
         <td>
-          <p>{item.name} (${item.price} X {quantity})</p>
+          <p>{item.name} ({formatPrice(item.price)} X {quantity})</p>
         </td>
         <td className="text-right">
-          <p>${item.price * quantity}</p>
+          <p>{formatPrice(price)}</p>
         </td>
       </tr>
     )
@@ -44,7 +46,7 @@ class Cart extends React.Component {
           <thead>
             <tr className="success">
               <th>Items: {count}</th>
-              <th className="cart-total">Subtotal: ${total}</th>
+              <th className="cart-total">Subtotal: {formatPrice(total)}</th>
             </tr>
           </thead>
           <tbody className="cart-items">
