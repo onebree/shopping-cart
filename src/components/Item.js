@@ -9,7 +9,10 @@ class Item extends React.Component {
           <div className="caption">
             <big className="item-name">{this.props.name}</big>
             <p className="item-price">${this.props.price}</p>
-            <button className="btn btn-default">Add To Cart</button>
+            <button className="btn btn-default" 
+                    onClick={() => this.props.addToCart(this.props.index)}>
+              Add To Cart
+            </button>
           </div>
         </div>
       </div>
