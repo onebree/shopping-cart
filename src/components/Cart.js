@@ -1,6 +1,28 @@
 import React from "react";
 
 class Cart extends React.Component {
+  constructor() {
+    super();
+
+    this.renderCart = this.renderCart.bind(this);
+  }
+
+  renderCart(key) {
+    const item = this.props.items[key];
+    const quantity = this.props.cart[key];
+
+    return (
+      <tr key={key}>
+        <td>
+          <p>{item.name} (${item.price} X {quantity})</p>
+        </td>
+        <td className="text-right">
+          <p>${item.price * quantity}</p>
+        </td>
+      </tr>
+    )
+  }
+
   render() {
     const cartIds = Object.keys(this.props.cart);
 
@@ -26,6 +48,7 @@ class Cart extends React.Component {
             </tr>
           </thead>
           <tbody className="cart-items">
+            {cartIds.map(this.renderCart)}
           </tbody>
         </table>
       </div>
