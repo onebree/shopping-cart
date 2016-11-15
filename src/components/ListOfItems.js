@@ -10,7 +10,7 @@ class ListOfItems extends React.Component {
           {
             Object.keys(this.props.items)
                   .map(key =>
-                    <div className="col-md-4">
+                    <div className="col-md-4" key={key}>
                       <Item key={key}
                             index={key}
                             details={this.props.items[key]}
