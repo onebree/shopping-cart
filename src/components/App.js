@@ -1,5 +1,6 @@
 import React from "react";
 import Cart from "./Cart";
+import Item from "./Item";
 
 class App extends React.Component {
   render() {
@@ -10,11 +11,22 @@ class App extends React.Component {
         <div className="row">
           <div className="col-md-8">
             <h2>Items For Sale</h2>
-            <ul className="list-of-items">
-              <li>item1</li>
-              <li>item2</li>
-              <li>item3</li>
-            </ul>
+            <div className="list-of-items">
+              <div className="row">
+                <div className="col-md-4">
+                  <Item key="item1" name="Nexus 6P" price={499.99}/>
+                </div>
+                <div className="col-md-4">
+                  <Item key="item2" name="OnePlus 3" price={399.99}/>
+                </div>
+                <div className="col-md-4">
+                  <Item key="item3" name="Google Pixel" price={649}/>
+                </div>
+                <div className="col-md-4">
+                  <Item key="item4" name="Google Pixel XL" price={769}/>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="col-md-4">
             <Cart />
