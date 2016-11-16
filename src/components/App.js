@@ -2,6 +2,7 @@ import React from "react";
 import Cart from "./Cart";
 import ListOfItems from "./ListOfItems";
 import sampleItems from "../sample-items";
+import base from "../base";
 
 class App extends React.Component {
   constructor() {
@@ -17,12 +18,22 @@ class App extends React.Component {
     };
   }
 
+  componentWillMount() {
+    this.ref = base.syncState("items", {
+      context: this,
+      state: "items"
+    });
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
+  }
+
   loadSamples() {
     this.setState ({
       items: sampleItems
     });
   }
-
 
   addToCart(key) {
     // Take a copy of our state
