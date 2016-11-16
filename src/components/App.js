@@ -23,10 +23,22 @@ class App extends React.Component {
       context: this,
       state: "items"
     });
+
+    const localStorageRef = localStorage.getItem("shopping-cart/cart");
+
+    if(localStorageRef) {
+      this.setState({
+        cart: JSON.parse(localStorageRef)
+      });
+    }
   }
 
   componentWillUnmount() {
     base.removeBinding(this.ref);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem("shopping-cart/cart", JSON.stringify(nextState.cart));
   }
 
   loadSamples() {
