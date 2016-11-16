@@ -11,7 +11,16 @@ class Cart extends React.Component {
   renderCart(key) {
     const item = this.props.items[key];
     const quantity = this.props.cart[key];
-    const price = item.price * quantity;
+
+    if(!item) {
+      return (
+        <tr key={key}>
+          <td colSpan="2">
+            <p>Sorry, item is no longer available.</p>
+          </td>
+        </tr>
+      )
+    }
 
     return (
       <tr key={key}>
@@ -19,7 +28,7 @@ class Cart extends React.Component {
           <p>{item.name} ({formatPrice(item.price)} X {quantity})</p>
         </td>
         <td className="text-right">
-          <p>{formatPrice(price)}</p>
+          <p>{formatPrice(item.price * quantity)}</p>
         </td>
       </tr>
     )
@@ -36,7 +45,11 @@ class Cart extends React.Component {
       const item = this.props.items[key];
       const quantity = this.props.cart[key];
 
-      return prevTotal + (quantity * item.price || 0);
+      if(item) {
+        return prevTotal + (quantity * item.price || 0);
+      }
+
+      return prevTotal;
     }, 0);
 
     return (
