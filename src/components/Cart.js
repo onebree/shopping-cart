@@ -10,7 +10,7 @@ class Cart extends React.Component {
   }
 
   changeQuantity(e, key) {
-    const quantity = parseInt(e.target.value);
+    const quantity = parseInt(e.target.value, 10);
     this.props.updateCart(key, quantity);
   }
 
