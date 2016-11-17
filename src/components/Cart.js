@@ -14,23 +14,23 @@ class Cart extends React.Component {
 
     if(!item) {
       return (
-        <tr key={key}>
-          <td colSpan="2">
-            <p>Sorry, item is no longer available.</p>
-          </td>
-        </tr>
+        <li className="list-group-item" key={key}>
+          Sorry, item is no longer available.
+        </li>
       )
     }
 
     return (
-      <tr key={key}>
-        <td>
-          <p>{item.name} ({formatPrice(item.price)} X {quantity})</p>
-        </td>
-        <td className="text-right">
-          <p>{formatPrice(item.price * quantity)}</p>
-        </td>
-      </tr>
+      <li className="list-group-item" key={key}>
+        <div className="row">
+          <div className="col-md-8">
+            {item.name} ({formatPrice(item.price)} X {quantity})
+          </div>
+          <div className="col-md-4 text-right">
+            {formatPrice(item.price * quantity)}
+          </div>
+        </div>
+      </li>
     )
   }
 
@@ -55,17 +55,19 @@ class Cart extends React.Component {
     return (
       <div className="cart">
         <h2>Shopping Cart</h2>
-        <table className="table">
-          <thead>
-            <tr className="success">
-              <th>Items: {count}</th>
-              <th className="cart-total">Subtotal: {formatPrice(total)}</th>
-            </tr>
-          </thead>
-          <tbody className="cart-items">
-            {cartIds.map(this.renderCart)}
-          </tbody>
-        </table>
+        <ul className="list-group">
+          <li className="list-group-item list-group-item-success total">
+            <div className="row">
+              <div className="col-md-4">
+                <strong>Items: {count}</strong>
+              </div>
+              <div className="col-md-8 cart-total text-right">
+                <strong>Subtotal: {formatPrice(total)}</strong>
+              </div>
+            </div>
+          </li>
+          {cartIds.map(this.renderCart)}
+        </ul>
       </div>
     )
   }

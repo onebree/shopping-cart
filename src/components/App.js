@@ -65,8 +65,8 @@ class App extends React.Component {
         <hr />
         <div className="row">
           <div className="col-md-8">
-            <button className="btn btn-default" onClick={this.loadSamples}>Load sample items</button>
             <ListOfItems items={this.state.items} addToCart={this.addToCart} />
+            <button className="btn btn-default" onClick={this.loadSamples}>Load sample items</button>
           </div>
           <div className="col-md-4">
             <Cart items={this.state.items} cart={this.state.cart} />
