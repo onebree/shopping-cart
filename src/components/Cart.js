@@ -6,11 +6,18 @@ class Cart extends React.Component {
     super();
 
     this.renderCart = this.renderCart.bind(this);
+    this.changeQuantity = this.changeQuantity.bind(this);
+  }
+
+  changeQuantity(e, key) {
+    const quantity = parseInt(e.target.value);
+    this.props.updateCart(key, quantity);
   }
 
   renderCart(key) {
     const item = this.props.items[key];
     const quantity = this.props.cart[key];
+    const quantityInput = <input type="number" className="form-control input-sm" name="quantity" min="1" value={quantity} onChange={(e) => this.changeQuantity(e, key)} />
 
     if(!item) {
       return (
@@ -24,7 +31,9 @@ class Cart extends React.Component {
       <li className="list-group-item" key={key}>
         <div className="row">
           <div className="col-md-8">
-            {item.name} ({formatPrice(item.price)} X {quantity})
+            {item.name} ({formatPrice(item.price)})
+            <br />
+            <small>{quantityInput}</small>
           </div>
           <div className="col-md-4 text-right">
             {formatPrice(item.price * quantity)}

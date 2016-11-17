@@ -10,6 +10,7 @@ class App extends React.Component {
 
     this.loadSamples = this.loadSamples.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.updateCart = this.updateCart.bind(this);
 
     // getInitialState
     this.state = {
@@ -58,6 +59,12 @@ class App extends React.Component {
     this.setState({ cart });
   }
 
+  updateCart(key, updatedQuantity) {
+    const cart = {...this.state.cart};
+    cart[key] = updatedQuantity;
+    this.setState({ cart });
+  }
+
   render() {
     return (
       <div className="container">
@@ -69,7 +76,7 @@ class App extends React.Component {
             <button className="btn btn-default" onClick={this.loadSamples}>Load sample items</button>
           </div>
           <div className="col-md-4">
-            <Cart items={this.state.items} cart={this.state.cart} />
+            <Cart items={this.state.items} cart={this.state.cart} updateCart={this.updateCart} />
           </div>
         </div>
       </div>
