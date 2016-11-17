@@ -18,11 +18,15 @@ class Cart extends React.Component {
     const item = this.props.items[key];
     const quantity = this.props.cart[key];
     const quantityInput = <input type="number" className="form-control input-sm" name="quantity" min="1" value={quantity} onChange={(e) => this.changeQuantity(e, key)} />
+    const removeButton = <button className="btn btn-default btn-sm" onClick={() => this.props.removeFromCart(key)}>&times;</button>
 
     if(!item) {
       return (
         <li className="list-group-item" key={key}>
-          Sorry, item is no longer available.
+          <div className="row">
+            <div className="col-md-10">Sorry, item is no longer available.</div>
+            <div className="col-md-2 text-right">{removeButton}</div>
+          </div>
         </li>
       )
     }
@@ -32,12 +36,14 @@ class Cart extends React.Component {
         <div className="row">
           <div className="col-md-8">
             {item.name} ({formatPrice(item.price)})
-            <br />
-            <small>{quantityInput}</small>
           </div>
           <div className="col-md-4 text-right">
             {formatPrice(item.price * quantity)}
           </div>
+        </div>
+        <div className="row">
+          <div className="col-md-8">{quantityInput}</div>
+          <div className="col-md-4 text-right">{removeButton}</div>
         </div>
       </li>
     )
