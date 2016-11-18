@@ -88,4 +88,10 @@ class Cart extends React.Component {
   }
 }
 
+Cart.propTypes = {
+  items: React.PropTypes.object.isRequired,
+  cart: React.PropTypes.object.isRequired,
+  removeFromCart: React.PropTypes.func.isRequired
+};
+
 export default Cart;

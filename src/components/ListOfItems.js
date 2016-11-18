@@ -23,4 +23,9 @@ class ListOfItems extends React.Component {
   }
 }
 
+ListOfItems.propTypes = {
+  items: React.PropTypes.object.isRequired,
+  addToCart: React.PropTypes.func.isRequired
+};
+
 export default ListOfItems;
